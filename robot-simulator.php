@@ -21,6 +21,12 @@ class Robot
     const DIRECTION_SOUTH = 2;
     const DIRECTION_WEST = 3;
 
+    const INSTRUCTIONS = [
+        'R' => 'turnRight',
+        'L' => 'turnLeft',
+        'A' => 'advance',
+    ];
+
     public function __construct(array $position, int $direction)
     {
         $this->position = $position;
@@ -78,9 +84,28 @@ class Robot
     /**
      * Move the robot forward
      *
+     * @param string $instructions
      * @return Robot
      */
-    public function instructions() {}
+    public function instructions(string $instructions)
+    {
+        $instructions = $this->cleanInstructions($instructions);
+        $tokens = str_split($instructions);
+
+        foreach($tokens as $token) {
+            $this->{Robot::INSTRUCTIONS[$token]}();
+        }
+
+    }
+
+    private function cleanInstructions(string $instructions)
+    {
+        $badMatches = preg_match('/[^LRA]/', $instructions);
+        if ($badMatches) {
+            throw new InvalidArgumentException;
+        }
+        return $instructions;
+    }
 
     /**
      * Increment direction
