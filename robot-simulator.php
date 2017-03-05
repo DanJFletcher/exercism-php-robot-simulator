@@ -32,7 +32,11 @@ class Robot
      *
      * @return Robot
      */
-    public function turnRight() { return $this; }
+    public function turnRight()
+    {
+        $this->incrementDirection();
+        return $this;
+    }
 
     /**
      * Turn the robot left
@@ -54,4 +58,17 @@ class Robot
      * @return Robot
      */
     public function instructions() {}
+
+    /**
+     * Increment direction
+     *
+     * Makes sure that once $direction is 3, we restart back at 0
+     * Otherwise, increment $direction by 1.
+     *
+     * @return void
+     */
+    private function incrementDirection()
+    {
+        $this->direction === 3 ? $this->direction = 0 : $this->direction++;
+    }
 }
