@@ -53,7 +53,27 @@ class Robot
      *
      * @return Robot
      */
-    public function advance() { return $this; }
+    public function advance() {
+        switch ($this->direction) {
+            // If the direction is North then y++
+            case 0:
+                $this->incrementY();
+                break;
+            // If the direction is East then x++
+            case 1:
+                $this->incrementX();
+                break;
+            // If the direction is South then y--
+            case 2:
+                $this->decrementY();
+                break;
+            // If the direction is West then x--
+            case 3:
+                $this->decrementX();
+                break;
+        }
+        return $this;
+    }
 
     /**
      * Move the robot forward
@@ -75,8 +95,8 @@ class Robot
         $this->direction === 3 ? $this->direction = 0 : $this->direction++;
     }
 
-        /**
-     * Increment direction
+    /**
+     * Decrement direction
      *
      * Makes sure that once $direction is 0, we restart back at 3
      * Otherwise, decrement $direction by 1.
@@ -86,5 +106,40 @@ class Robot
     private function decrementDirection()
     {
         $this->direction === 0 ? $this->direction = 3 : $this->direction--;
+    }
+
+    /**
+     * Increment position
+     *
+     * First of all... if we were to represent this in a GUI context,
+     * northward movements should be decrementing y not incrementing it,
+     * but ok...
+     * This function decides which coordinate to update, and how.
+     *
+     * @return void
+     */
+    private function updatePosition()
+    {
+        // If the direction is North y++
+    }
+
+    private function decrementX()
+    {
+        $this->position[0]--;
+    }
+
+    private function incrementX()
+    {
+        $this->position[0]++;
+    }
+
+    private function decrementY()
+    {
+        $this->position[1]--;
+    }
+
+    private function incrementY()
+    {
+        $this->position[1]++;
     }
 }
