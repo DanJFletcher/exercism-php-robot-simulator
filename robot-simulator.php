@@ -3,29 +3,37 @@
 class Robot
 {
     /**
-     * The position of the robot
-     *
-     * @var array
+     * @var array $position X and Y position of the robot
      */
     public $position;
 
     /**
-     * The direction of the robot
-     *
-     * @var int
+     * @var int $direction a number corrosponding the direction of the robot
      */
     public $direction;
 
+    /**
+     * @var int DIRECTION_NORTH corrosponding number for North
+     * @var int DIRECTION_EAST corrosponding number for East
+     * @var int DIRECTION_SOUTH corrosponding number for South
+     * @var int DIRECTION_WEST corrosponding number for West
+     */
     const DIRECTION_NORTH = 0;
     const DIRECTION_EAST = 1;
     const DIRECTION_SOUTH = 2;
     const DIRECTION_WEST = 3;
 
+    /**
+     * Available instructions for the robot and associated functions
+     *
+     * @var array INSTRUCTIONS
+     */
     const INSTRUCTIONS = [
         'R' => 'turnRight',
         'L' => 'turnLeft',
         'A' => 'advance',
     ];
+
 
     public function __construct(array $position, int $direction)
     {
@@ -36,7 +44,7 @@ class Robot
     /**
      * Turn the robot right
      *
-     * @return Robot
+     * @return Robot the current instance is returned
      */
     public function turnRight()
     {
@@ -47,7 +55,7 @@ class Robot
     /**
      * Turn the robot left
      *
-     * @return Robot
+     * @return Robot the current instance is returned
      */
     public function turnLeft() {
         $this->decrementDirection();
@@ -57,7 +65,7 @@ class Robot
     /**
      * Move the robot forward
      *
-     * @return Robot
+     * @return Robot the current instance is returned
      */
     public function advance() {
         switch ($this->direction) {
@@ -82,28 +90,42 @@ class Robot
     }
 
     /**
-     * Move the robot forward
+     * Execute a string of instructions
      *
      * @param string $instructions
-     * @return Robot
+     * @return void
      */
     public function instructions(string $instructions)
     {
+        // TODO: The name of cleanInstructions doesn't match
+        // the intent. Consider changing, or remove the method all
+        // together.
         $instructions = $this->cleanInstructions($instructions);
+
+        // if the instructions are ok, we can tokenize them 
         $tokens = str_split($instructions);
 
         foreach($tokens as $token) {
+            // call the function associated with the current token
             $this->{Robot::INSTRUCTIONS[$token]}();
         }
 
     }
-
+    /**
+     * Check instructions for invalid characters
+     *
+     * @param string $instructions
+     * @throws InvalidArgumentException
+     * @return string $instructions
+     */
     private function cleanInstructions(string $instructions)
     {
+        // TODO: Generalize the regex so that we can add more instructions
+        // without needing to update this
         $badMatches = preg_match('/[^LRA]/', $instructions);
-        if ($badMatches) {
-            throw new InvalidArgumentException;
-        }
+
+        if ($badMatches) { throw new InvalidArgumentException; }
+
         return $instructions;
     }
 
@@ -145,9 +167,23 @@ class Robot
      */
     private function updatePosition()
     {
-        // If the direction is North y++
+        // TODO: This will eventually generalize some of the logic
+        // when the robot can move both forward and back
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | Position helpers
+    |--------------------------------------------------------------------------
+    | These functions simply make incrementing and decrementing x and y
+    | positions easier to read. Normally, I would make $position an object
+    | for a problem like this, with properties like $x and $y so that I can
+    | simply do $position->x and $position->y. I think that syntax is 
+    | has a clearer intent.
+    |
+    | However, the test expects $position to return an array like [0, 1].
+    | And so I simply wrote this class to meet those requirements.
+    */
     private function decrementX()
     {
         $this->position[0]--;
