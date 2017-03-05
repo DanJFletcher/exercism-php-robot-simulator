@@ -1,6 +1,7 @@
 <?php
 
 include_once 'robot-simulator.php';
+include_once 'functions.php';
 
 class RobotSimulatorTest extends PHPUnit\Framework\TestCase
 {
