@@ -69,20 +69,16 @@ class Robot
      */
     public function advance() {
         switch ($this->direction) {
-            // If the direction is North then y++
-            case 0:
+            case self::DIRECTION_NORTH:
                 $this->incrementY();
                 break;
-            // If the direction is East then x++
-            case 1:
+            case self::DIRECTION_EAST:
                 $this->incrementX();
                 break;
-            // If the direction is South then y--
-            case 2:
+            case self:DIRECTION_SOUTH:
                 $this->decrementY();
                 break;
-            // If the direction is West then x--
-            case 3:
+            case self::DIRECTION_WEST:
                 $this->decrementX();
                 break;
         }
@@ -175,14 +171,14 @@ class Robot
     |--------------------------------------------------------------------------
     | Position helpers
     |--------------------------------------------------------------------------
-    | These functions simply make incrementing and decrementing x and y
-    | positions easier to read. Normally, I would make $position an object
-    | for a problem like this, with properties like $x and $y so that I can
-    | simply do $position->x and $position->y. I think that syntax is 
-    | has a clearer intent.
+    | These functions simply help make incrementing and decrementing x and y
+    | positions more readable. Normally, I would make $position an object
+    | for a problem like this, with properties like $x and $y so that I
+    | can simply do `$position->x` and also, `$position->y`. I think 
+    | that syntax has a clearer intent.
     |
     | However, the test expects $position to return an array like [0, 1].
-    | And so I simply wrote this class to meet those requirements.
+    | And so I just wrote this class to meet those requirements.
     */
     private function decrementX()
     {
