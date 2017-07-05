@@ -8,7 +8,7 @@ class Robot
     public $position;
 
     /**
-     * @var int $direction a number corrosponding the direction of the robot
+     * @var int $direction a number corrosponding to the direction of the robot
      */
     public $direction;
 
